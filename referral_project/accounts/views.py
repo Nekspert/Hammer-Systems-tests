@@ -39,7 +39,6 @@ class VerifyCodeView(GenericAPIView):
             phone_code = PhoneCode.objects.filter(phone_number=phone).latest('created_at')
         except PhoneCode.DoesNotExist:
             return Response({'message': 'Код не найден'}, status=status.HTTP_404_NOT_FOUND)
-
         if phone_code.is_expired() or phone_code.code != code:
             return Response({'message': 'Неверный или просроченный код'}, status=status.HTTP_400_BAD_REQUEST)
 

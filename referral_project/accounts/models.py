@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -32,7 +32,7 @@ class PhoneCode(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def is_expired(self):
-        return datetime.now() > self.created_at + timedelta(minutes=5)
+        return datetime.now(tz=timezone.utc) > self.created_at + timedelta(minutes=10)
 
     def __str__(self):
         return f'<{self.code}>'
